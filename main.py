@@ -14,16 +14,10 @@ with open(logpath, "a") as writer:
     currentcharcount = 0
     currentline = ""
 
-
-    def write():
-        print(currentline)
-        writer.write(currentline)
-        print("wrote")
-
-
     def onkeypress(keyevent):
         try:
-            if keyevent.char == "s":
+            if keyevent == keyboard.Key.F1:
+                print("Close")
                 writer.close()
                 sys.exit()
 
@@ -31,7 +25,7 @@ with open(logpath, "a") as writer:
             global currentline
             key = keyevent.char
             if currentcharcount+len(key) > charsperline:
-                write()
+                writer.write(currentline)
                 currentcharcount = 0
                 currentline = ""
 
