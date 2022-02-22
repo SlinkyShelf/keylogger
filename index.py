@@ -6,7 +6,7 @@ import atexit
 import sys
 
 day = date.today()
-charsperline = 10
+charsperline = 100
 
 listener = ""
 stop = False
@@ -23,8 +23,8 @@ if exists(logpath):
     line = ""
     for line in open(logpath):
         pass
-    currentline = line
-    currentcharcount = len(currentline)
+    # currentline = line
+    currentcharcount = len(line)
 
 print(currentline+".")
 print(currentcharcount)
@@ -34,7 +34,7 @@ def saveline():
     global currentline
 
     writer = open(logpath, "a")
-    if len(currentline) >= charsperline:
+    if currentcharcount >= charsperline:
         writer.write(currentline+"\n")
     else:
         writer.write(currentline)
