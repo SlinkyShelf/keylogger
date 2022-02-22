@@ -4,7 +4,7 @@ from datetime import date
 import sys
 
 day = date.today()
-charsperline = 1
+charsperline = 100
 
 listener = ""
 stop = False
