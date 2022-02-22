@@ -1,6 +1,7 @@
 from time import sleep, time
 from pynput import keyboard, mouse
 from datetime import date
+import os;
 from os.path import exists
 import atexit
 import sys
@@ -13,21 +14,17 @@ stop = False
 
 logpath = "./logs/"+str(day)+".txt"
 
-
 currentcharcount = 0
 currentline = ""
 
+if not exists("./logs/"):
+    os.mkdir("./logs/")
+
 if exists(logpath):
-
-
     line = ""
     for line in open(logpath):
         pass
-    # currentline = line
     currentcharcount = len(line)
-
-print(currentline+".")
-print(currentcharcount)
 
 def saveline():
     global currentcharcount
@@ -50,8 +47,6 @@ def onkeypress(keyevent):
         global currentcharcount
         global currentline
         key = keyevent.char
-        print(currentline+".")
-        print(currentcharcount)
         if currentcharcount+len(key) > charsperline:
             saveline()
             
